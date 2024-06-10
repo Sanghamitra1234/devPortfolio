@@ -4,6 +4,7 @@ import BlogCard from "../../components/blogCard/BlogCard";
 import {blogSection} from "../../portfolio";
 import {Fade} from "react-reveal";
 import StyleContext from "../../contexts/StyleContext";
+const blogsJson = require("./blogs.json");
 export default function Blogs() {
   const {isDark} = useContext(StyleContext);
   const [mediumBlogs, setMediumBlogs] = useState([]);
@@ -23,20 +24,14 @@ export default function Blogs() {
   useEffect(() => {
     if (blogSection.displayMediumBlogs === "true") {
       const getProfileData = () => {
-        fetch("/blogs.json")
-          .then(result => {
-            console.log("result: ", result);
-            if (result.ok) {
-              return result.json();
-            }
-          })
-          .then(response => {
-            setMediumBlogsFunction(response.items);
-          })
-          .catch(function (error) {
-            setMediumBlogsFunction("Error");
-            blogSection.displayMediumBlogs = "false";
-          });
+        try {
+          if (blogsJson.status === "ok") {
+            setMediumBlogsFunction(blogsJson.items.slice(0,3));
+          }
+        } catch (error) {
+          setMediumBlogsFunction("Error");
+          blogSection.displayMediumBlogs = "false";
+        }
       };
       getProfileData();
     }
