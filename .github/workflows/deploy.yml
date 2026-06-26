@@ -25,10 +25,14 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22.x
+          cache: npm
+
+      - name: Update npm 🚀 # npm 10.9.x crashes with "Exit handler never called"; 11.x fixes it
+        run: npm install -g npm@11
 
       - name: Install and Build 🔧 # Build the Project
         run: |
-          npm ci
+          npm ci --no-audit --no-fund
           npm run build
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
