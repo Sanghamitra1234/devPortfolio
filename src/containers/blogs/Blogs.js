@@ -25,6 +25,7 @@ export default function Blogs() {
       const getProfileData = () => {
         fetch("/blogs.json")
           .then(result => {
+            console.log("result: ", result);
             if (result.ok) {
               return result.json();
             }
@@ -33,9 +34,6 @@ export default function Blogs() {
             setMediumBlogsFunction(response.items);
           })
           .catch(function (error) {
-            console.error(
-              `${error} (because of this error Blogs section could not be displayed. Blogs section has reverted to default)`
-            );
             setMediumBlogsFunction("Error");
             blogSection.displayMediumBlogs = "false";
           });
@@ -77,7 +75,7 @@ export default function Blogs() {
                     />
                   );
                 })
-              : mediumBlogs.map((blog, i) => {
+              : mediumBlogs.slice(0, 3).map((blog, i) => {
                   return (
                     <BlogCard
                       key={i}

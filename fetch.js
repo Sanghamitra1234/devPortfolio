@@ -106,7 +106,7 @@ if (MEDIUM_USERNAME !== undefined) {
   const req = https.request(options, res => {
     let mediumData = "";
 
-    console.log(`statusCode: ${res.statusCode}`);
+    console.log(`statusCode of medium: ${res.statusCode}`);
     if (res.statusCode !== 200) {
       throw new Error(ERR.requestMediumFailed);
     }
